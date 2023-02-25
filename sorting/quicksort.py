@@ -11,26 +11,21 @@ Complexity
     Space: O(lg n)
 """
 
-data = [8, 3, 2, 7, 9, 4, 1]
-# data = [3, 1, 2]
-
+data = [8, 1, 2, 7, 9, 3, 4]
 print("ORIGINAL", data)
 
-def as_list(x):
-    if type(x) is list:
-        return x
-    else:
-        return [x]
-
-def partition(arr):
-    pivot = len(arr) - 1
-    left = 0
-    right = len(arr) - 2
+def partition(arr, start, end):
+    
+    left = start
+    right = end - 1
+    pivot = end
 
     while left <= right:
-        while left <= len(arr) - 2 and arr[left] < arr[pivot]:
+
+        while left <= end and arr[left] < arr[pivot]:
             left += 1
-        while right >= 0 and arr[right] >= arr[pivot]:
+       
+        while right >= start and arr[right] >= arr[pivot]:
             right -= 1
 
         if left < right:
@@ -38,31 +33,15 @@ def partition(arr):
         else:
             arr[left], arr[pivot] = arr[pivot], arr[left]
 
-    front = as_list(arr[0:left])
-    if len(front) > 1:
-        front = partition(front)
+    if (left - start):
+        arr = partition(arr, start, left - 1)
+
+    if (end - left):
+        arr = partition(arr, left + 1, end)
     
-    middle = as_list(arr[left])
-    
-    back = as_list(arr[(left+1):])
-    if len(back) > 1:
-        back = partition(back)
-    
-    print(front, middle, back)
-    
-    return front + middle + back
+    return arr
 
+def quicksort(arr):
+    return partition(arr, 0, len(arr) - 1)
 
-print("SOLVED  ", partition(data))
-
-
-
-
-    
-
-    
-        
-
-
-
-
+print("SOLVED  ", quicksort(data))
