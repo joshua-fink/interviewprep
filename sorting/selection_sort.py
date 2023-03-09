@@ -22,10 +22,5 @@ for i in range(0, len(data)):
             small_index = j
     
     data[i], data[small_index] = data[small_index], data[i]
-    """
-    temp = data[small_index]
-    data[small_index] = data[i]
-    data[i] = temp
-    """
 
 print("SOLVED  ", data)
